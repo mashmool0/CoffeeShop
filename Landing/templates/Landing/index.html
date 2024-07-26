@@ -266,149 +266,50 @@
         <div class="container">
             <div class="row">
 
-                <!-- Breakfast Section -->
-                <div class="col-lg-6 col-12 mb-4 mb-lg-0">
-                    <div class="menu-block-wrap">
-                        <div class="text-center mb-4 pb-lg-2">
-                            <em class="text-white">Delicious Menu</em>
-                            <h4 class="text-white">Breakfast</h4>
-                        </div>
-
-                        <!-- Breakfast Tabs -->
-                        <ul class="nav nav-tabs" id="breakfastTabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="breakfast1-tab" data-toggle="tab" href="#breakfast1"
-                                   role="tab" aria-controls="breakfast1" aria-selected="true">Section 1</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="breakfast2-tab" data-toggle="tab" href="#breakfast2" role="tab"
-                                   aria-controls="breakfast2" aria-selected="false">Section 2</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="breakfast3-tab" data-toggle="tab" href="#breakfast3" role="tab"
-                                   aria-controls="breakfast3" aria-selected="false">Section 3</a>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content" id="breakfastTabsContent">
-                            <div class="tab-pane fade show active" id="breakfast1" role="tabpanel"
-                                 aria-labelledby="breakfast1-tab">
-                                <div class="menu-block">
-                                    <div class="d-flex">
-                                        <h6>Pancakes</h6>
-                                        <span class="underline"></span>
-                                        <strong class="ms-auto">$12.50</strong>
-                                    </div>
-                                    <div class="border-top mt-2 pt-2">
-                                        <small>Fresh brewed coffee and steamed milk</small>
-                                    </div>
-                                </div>
-                                <!-- More items here for Section 1 -->
+                {% for field in food_field %}
+                    <div class="col-lg-6 col-12 mb-4 mb-lg-0">
+                        <div class="menu-block-wrap">
+                            <div class="text-center mb-4 pb-lg-2">
+                                <em class="text-white">{{ field.name }} Menu</em>
+                                <h4 class="text-white">{{ field.name }}</h4>
                             </div>
-                            <div class="tab-pane fade" id="breakfast2" role="tabpanel" aria-labelledby="breakfast2-tab">
-                                <div class="menu-block">
-                                    <div class="d-flex">
-                                        <h6>Toasted Waffle</h6>
-                                        <span class="underline"></span>
-                                        <strong class="ms-auto">
-                                            <del>$16.50</del>
-                                        </strong>
-                                        <strong class="ms-2">$12.00</strong>
+
+                            <!-- Tabs -->
+                            <ul class="nav nav-tabs" id="{{ field.name }}Tabs" role="tablist">
+                                {% for section in field.section_food.all %}
+                                    <li class="nav-item">
+                                        <a class="nav-link {% if forloop.first %}active{% endif %}"
+                                           id="{{ field.name }}-{{ section.id }}-tab" data-toggle="tab"
+                                           href="#{{ field.name }}-{{ section.id }}" role="tab"
+                                           aria-controls="{{ field.name }}-{{ section.id }}"
+                                           aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">{{ section.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+
+                            <div class="tab-content" id="{{ field.name }}TabsContent">
+                                {% for section in field.section_food.all %}
+                                    <div class="tab-pane fade {% if forloop.first %}show active{% endif %}"
+                                         id="{{ field.name }}-{{ section.id }}" role="tabpanel"
+                                         aria-labelledby="{{ field.name }}-{{ section.id }}-tab">
+                                        {% for item in section.food_set.all %}
+                                            <div class="menu-block">
+                                                <div class="d-flex">
+                                                    <h6>{{ item.name }}</h6>
+                                                    <span class="underline"></span>
+                                                    <strong class="ms-auto">{{ item.price|money }}T</strong>
+                                                </div>
+                                                <div class="border-top mt-2 pt-2">
+                                                    <small>Rich Milk and Foam</small>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
                                     </div>
-                                    <div class="border-top mt-2 pt-2">
-                                        <small>Brewed coffee and steamed milk</small>
-                                    </div>
-                                </div>
-                                <!-- More items here for Section 2 -->
-                            </div>
-                            <div class="tab-pane fade" id="breakfast3" role="tabpanel" aria-labelledby="breakfast3-tab">
-                                <div class="menu-block">
-                                    <div class="d-flex">
-                                        <h6>Fried Chips <span class="badge ms-3">Recommend</span></h6>
-                                        <span class="underline"></span>
-                                        <strong class="ms-auto">$15.0</strong>
-                                    </div>
-                                    <div class="border-top mt-2 pt-2">
-                                        <small>Rich Milk and Foam</small>
-                                    </div>
-                                </div>
-                                <!-- More items here for Section 3 -->
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Coffee Section -->
-                <div class="col-lg-6 col-12">
-                    <div class="menu-block-wrap">
-                        <div class="text-center mb-4 pb-lg-2">
-                            <em class="text-white">Favourite Menu</em>
-                            <h4 class="text-white">Coffee</h4>
-                        </div>
-
-                        <!-- Coffee Tabs -->
-                        <ul class="nav nav-tabs" id="coffeeTabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="coffee1-tab" data-toggle="tab" href="#coffee1" role="tab"
-                                   aria-controls="coffee1" aria-selected="true">Section 1</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="coffee2-tab" data-toggle="tab" href="#coffee2" role="tab"
-                                   aria-controls="coffee2" aria-selected="false">Section 2</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="coffee3-tab" data-toggle="tab" href="#coffee3" role="tab"
-                                   aria-controls="coffee3" aria-selected="false">Section 3</a>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content" id="coffeeTabsContent">
-                            <div class="tab-pane fade show active" id="coffee1" role="tabpanel"
-                                 aria-labelledby="coffee1-tab">
-                                <div class="menu-block">
-                                    <div class="d-flex">
-                                        <h6>Latte</h6>
-                                        <span class="underline"></span>
-                                        <strong class="ms-auto">
-                                            <del>$12.50</del>
-                                        </strong>
-                                        <strong class="ms-2">$7.50</strong>
-                                    </div>
-                                    <div class="border-top mt-2 pt-2">
-                                        <small>Fresh brewed coffee and steamed milk</small>
-                                    </div>
-                                </div>
-                                <!-- More items here for Section 1 -->
-                            </div>
-                            <div class="tab-pane fade" id="coffee2" role="tabpanel" aria-labelledby="coffee2-tab">
-                                <div class="menu-block">
-                                    <div class="d-flex">
-                                        <h6>White Coffee <span class="badge ms-3">Recommend</span></h6>
-                                        <span class="underline"></span>
-                                        <strong class="ms-auto">$5.90</strong>
-                                    </div>
-                                    <div class="border-top mt-2 pt-2">
-                                        <small>Brewed coffee and steamed milk</small>
-                                    </div>
-                                </div>
-                                <!-- More items here for Section 2 -->
-                            </div>
-                            <div class="tab-pane fade" id="coffee3" role="tabpanel" aria-labelledby="coffee3-tab">
-                                <div class="menu-block">
-                                    <div class="d-flex">
-                                        <h6>Chocolate Milk</h6>
-                                        <span class="underline"></span>
-                                        <strong class="ms-auto">$5.50</strong>
-                                    </div>
-                                    <div class="border-top mt-2 pt-2">
-                                        <small>Rich Milk and Foam</small>
-                                    </div>
-                                </div>
-                                <!-- More items here for Section 3 -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
 
             </div>
         </div>
@@ -675,6 +576,9 @@
 </main>
 
 <!-- JAVASCRIPT FILES -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="{% static '/js/jquery.min.js' %}"></script>
 <script src="{% static '/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/jquery.sticky.js' %}"></script>

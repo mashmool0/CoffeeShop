@@ -12,7 +12,7 @@ class FoodsField(models.Model):
 
 
 class SectionFood(models.Model):
-    foods = models.ForeignKey(FoodsField, on_delete=models.CASCADE,related_name='section_food')
+    foods = models.ForeignKey(FoodsField, on_delete=models.CASCADE, related_name='section_food')
     name = models.CharField(max_length=50)
 
     def __str__(self):
